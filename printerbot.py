@@ -39,8 +39,7 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 def send_to_printer(file_path):
-    #subprocess.run(['lp', file_path])
-    print('tipo pechataet')
+    subprocess.run(['lp', file_path])
     logger.info(f'Document {file_path} had sent to printer')
 
 
@@ -59,14 +58,14 @@ def auth(update: Update, context: CallbackContext) -> None:
     if len(context.args) != 1:
         update.message.reply_text('You need to write only your innopolis email')
         return
-    logger.info(f'User {update.effective_user.id} attempts to sign up with email {context.args[0]}')
+    logger.info(f'User {update.effective_user.id} ({update.effective_user.name}) attempts to sign up with email {context.args[0]}')
     if not(emailconfirmation.send_email(update.effective_user.id, context.args[0])):
         update.message.reply_text('Wrong email')    
         return
     update.message.reply_text('Send "/code <code_from_your_email>" to confirm your email')
 
 def code(update: Update, context: CallbackContext) -> None:
-    logger.info(f'User {update.effective_user.id} attempts to input a code')
+    logger.info(f'User {update.effective_user.id} ({update.effective_user.name}) attempts to input a code')
     if len(context.args) != 1:
         update.message.reply_text('You need to write only your code from email')
         return
