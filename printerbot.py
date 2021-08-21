@@ -49,7 +49,7 @@ def send_to_printer(file_path):
 def start(update: Update, context: CallbackContext) -> None:
     """Send a message when the command /start is issued."""
     user = update.effective_user
-    update.message.reply_text(fr'Hi\! This is @innoprintbot you can print some document with my help. We recommend to use PDF format. Send \'/auth <your_email>\' to confirm that you are student or stuff')
+    update.message.reply_text(fr'Hi! This is @innoprintbot you can print some document with my help. We recommend to use PDF format. Send '/auth <your_email>' to confirm that you are student or stuff')
     logger.info(f'User {user.name} started bot')
 
 def auth(update: Update, context: CallbackContext) -> None:
