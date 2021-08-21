@@ -49,7 +49,7 @@ def send_to_printer(file_path):
 def start(update: Update, context: CallbackContext) -> None:
     """Send a message when the command /start is issued."""
     user = update.effective_user
-    update.message.reply_text(fr'Hi! This is @innoprintbot you can print some document with my help. We recommend to use PDF format. Send `/auth <your_email>` to confirm that you are student or stuff')
+    update.message.reply_text(fr'Hi! This is @innoprintbot you can print some document with my help. We recommend to use PDF format. Send "/auth <your_email>" to confirm that you are student or stuff')
     logger.info(f'User {user.name} started bot')
 
 def auth(update: Update, context: CallbackContext) -> None:
@@ -60,8 +60,10 @@ def auth(update: Update, context: CallbackContext) -> None:
         update.message.reply_text('You need to write only your innopolis email')
         return
     logger.info(f'User {update.effective_user.id} attempts to sign up with email {context.args[0]}')
-    emailconfirmation.send_email(update.effective_user.id, context.args[0])
-    update.message.reply_text('Send `/code <code_from_your_email>` to confirm your email')
+    if not(emailconfirmation.send_email(update.effective_user.id, context.args[0])):
+        update.message.reply_text('Wrong email')    
+        return
+    update.message.reply_text('Send "/code <code_from_your_email>" to confirm your email')
 
 def code(update: Update, context: CallbackContext) -> None:
     logger.info(f'User {update.effective_user.id} attempts to input a code')
