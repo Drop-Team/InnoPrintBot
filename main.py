@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 from aiogram import Bot, types
 from aiogram.dispatcher import Dispatcher
 from aiogram.utils import executor
@@ -21,7 +23,7 @@ LETTER_SENDING_COOLDOWN = 60
 CODE_ATTEMPT_COOLDOWN = 5
 CODE_ACTIVE_MINUTES = 10
 PRINTING_COOLDOWN = 30
-CHECK_FILES_COOLDOWN = 5
+CHECK_FILES_COOLDOWN = 60
 
 logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO,
@@ -40,12 +42,14 @@ def state_filter(message, state):
 
 @dp.message_handler(commands=["start"])
 async def process_start_command(message: types.Message):
+    logger.info(f"User {message.from_user.username} ({message.from_user.id}) started bot")
     await message.answer("Hi! This is @innoprintbot you can print some document with my help.\n"
                          "First send your innopolis email to verify you are a student or staff.")
 
 
 @dp.message_handler(commands=["help"])
 async def process_help_command(message: types.Message):
+    logger.info(f"User {message.from_user.username} ({message.from_user.id}) used help command")
     await message.answer("To print just send your file to me\n"
                          "Please *don't shut down* the printer. It causes connection problems. "
                          "Printer will suspend automatically!\n\n"
@@ -73,6 +77,7 @@ async def send_code(user_id):
 
 @dp.message_handler(lambda message: state_filter(message, auth.UserStates.init))
 async def process_email_message(message: types.Message):
+    logger.info(f"User {message.from_user.username} ({message.from_user.id}) tried to send email")
     user_id = message.from_user.id
     if not auth.validate_email(message.text):
         return await message.answer("You need to send your innopolis email.")
@@ -87,6 +92,7 @@ async def process_email_message(message: types.Message):
 
 @dp.callback_query_handler(lambda cb: cb.data == "change_email")
 async def process_change_email_callback(callback_query: types.CallbackQuery):
+    logger.info(f"User {callback_query.from_user.username} ({callback_query.from_user.id}) tried to change email")
     user_id = callback_query.from_user.id
     if auth.users_data[user_id]["state"] == auth.UserStates.confirmed:
         await callback_query.answer("You are already authorized.")
@@ -98,6 +104,7 @@ async def process_change_email_callback(callback_query: types.CallbackQuery):
 
 @dp.message_handler(lambda message: state_filter(message, auth.UserStates.requested_code))
 async def process_code_message(message: types.Message):
+    logger.info(f"User {message.from_user.username} ({message.from_user.id}) tried to enter a code")
     user_id = message.from_user.id
 
     if "code_attempt" in auth.users_data[user_id]:
@@ -122,6 +129,7 @@ async def process_code_message(message: types.Message):
 
 @dp.callback_query_handler(lambda cb: cb.data == "resend_code")
 async def process_resend_code_callback(callback_query: types.CallbackQuery):
+    logger.info(f"User {callback_query.from_user.username} ({callback_query.from_user.id}) requested code resending")
     user_id = callback_query.from_user.id
     if auth.users_data[user_id]["state"] == auth.UserStates.init:
         await callback_query.answer("First you need to set up your email.")
@@ -149,6 +157,8 @@ async def process_print_message(message: types.Message):
     file_path = await files.download_file(bot, doc)
     if file_path is None:
         return await msg.edit_text("Your file is too big.")
+
+    logger.info(f"User {message.from_user.username} ({message.from_user.id}) prints document")
 
     auth.users_data[user_id]["last_print"] = datetime.now()
     files.print_file(doc)

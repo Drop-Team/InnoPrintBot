@@ -26,7 +26,7 @@ async def download_file(bot, doc):
 
 
 def print_file(file_path):
-    subprocess.run(["lp", "botsrv/innoprintbot/printed_files/*", "-d", "5Fprinter", file_path])
+    subprocess.run(["lp", file_path, "-d", "5Fprinter"])
     # print("print testing...")
 
 
