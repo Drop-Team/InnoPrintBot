@@ -2,7 +2,6 @@ from datetime import datetime
 import subprocess
 import os
 
-
 MAX_FILE_SIZE = 64 * 1024 * 1024
 DELETE_FILES_IN = 10
 FILES_PATH = "printed_files/"
@@ -39,5 +38,4 @@ async def check_files():
         dt_str = fn.split(".")[0] if "." in fn else fn
         dt = datetime.strptime(dt_str, "%Y%m%d-%H%M%S-%f")
         if int((now - dt).total_seconds()) // 60 >= DELETE_FILES_IN:
-            print("nice")
             os.remove(FILES_PATH + fn)

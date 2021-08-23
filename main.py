@@ -23,7 +23,6 @@ CODE_ACTIVE_MINUTES = 10
 PRINTING_COOLDOWN = 30
 CHECK_FILES_COOLDOWN = 5
 
-
 logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO,
     filename='bot.log'
@@ -109,7 +108,6 @@ async def process_code_message(message: types.Message):
 
     if "code_sent_to_email" in auth.users_data[user_id]:
         minutes_past = int((datetime.now() - auth.users_data[user_id]["code_sent_to_email"]).total_seconds()) // 60
-        print(minutes_past)
         if minutes_past >= CODE_ACTIVE_MINUTES:
             return await message.answer(f"Code is already inactive. You need to request it again.")
 
