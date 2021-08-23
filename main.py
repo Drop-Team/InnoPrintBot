@@ -161,7 +161,7 @@ async def process_print_message(message: types.Message):
     logger.info(f"User {message.from_user.username} ({message.from_user.id}) prints document")
 
     auth.users_data[user_id]["last_print"] = datetime.now()
-    files.print_file(doc)
+    files.print_file(file_path)
     await msg.edit_text("Done! Go to the printer on 5th floor and take your documents.")
 
 
