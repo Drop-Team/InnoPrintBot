@@ -26,8 +26,8 @@ async def download_file(bot, doc):
 
 
 def print_file(file_path):
-    # subprocess.run(["lp", file_path, "-d", "5Fprinter"])
-    print("print testing...")
+    subprocess.run(["lp", file_path, "-d", "5Fprinter"])
+    print("printing" + file_path)
 
 
 async def check_files():
