@@ -36,8 +36,8 @@ logger = logging.getLogger(__name__)
 def state_filter(message, state):
     user_id = message.from_user.id
     if user_id not in auth.users_data:
-        auth.users_data[user_id] = {}
-    return auth.users_data[user_id].get("state", auth.UserStates.init) == state
+        auth.users_data[user_id] = {"state": auth.UserStates.init}
+    return auth.users_data[user_id]["state"] == state
 
 
 @dp.message_handler(commands=["start"])
