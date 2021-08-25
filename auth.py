@@ -2,7 +2,6 @@ import smtplib
 import json
 import random
 import re
-import email
 
 import config
 
