@@ -51,7 +51,7 @@ def send_mail(user_id):
     server.login(email_user, email_password)
     try:
         server.sendmail(sent_from, [email], f'Subject: {subject}\n\n{body}')
-    except:
+    except Exception:
         server.close()
         return False
     server.close()
