@@ -48,7 +48,11 @@ def send_mail(user_id):
     server = smtplib.SMTP_SSL("smtp.gmail.com", 465)
     server.ehlo()
     server.login(email_user, email_password)
-    server.sendmail(sent_from, [email], f'Subject: {subject}\n\n{body}')
+    try:
+        server.sendmail(sent_from, [email], f'Subject: {subject}\n\n{body}')
+    except:
+        server.close()
+        return False
     server.close()
     return True
 

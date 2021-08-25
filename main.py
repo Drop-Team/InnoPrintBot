@@ -66,7 +66,8 @@ async def send_code(user_id):
             return await bot.send_message(user_id, f"You can request new code only in {difference} sec.")
 
     if not auth.send_mail(user_id):
-        return await bot.send_message(user_id, "There was something error sending letter.")
+        return await bot.send_message(user_id, "There was something error sending letter. "
+                                               "Please send your innopolis email.")
 
     auth.users_data[user_id]["letter_sent"] = datetime.now()
     auth.users_data[user_id]["code_sent_to_email"] = datetime.now()
@@ -82,7 +83,6 @@ async def process_email_message(message: types.Message):
     if not message.text or not auth.validate_email(message.text):
         return await message.answer("You need to send your innopolis email.")
 
-    auth.users_data[user_id]["state"] = auth.UserStates.requested_code
     auth.users_data[user_id]["email"] = message.text
     await message.answer(f"Email {message.text} has been set. Now you need to confirm it.",
                          reply_markup=change_email_kb)
