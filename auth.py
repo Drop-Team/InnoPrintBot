@@ -2,6 +2,7 @@ import smtplib
 import json
 import random
 import re
+import email
 
 import config
 
@@ -31,7 +32,8 @@ def save_file():
 
 
 def validate_email(email):
-    return re.match(r"[^@]+@[^@]+\.[^@]+", email) and ("@innopolis.university" in email or "@innopolis.ru" in email)
+    regex = r"\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b"
+    return re.fullmatch(regex, email) and ("@innopolis.university" in email or "@innopolis.ru" in email)
 
 
 def send_mail(user_id):
