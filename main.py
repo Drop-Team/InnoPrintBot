@@ -75,11 +75,11 @@ async def send_code(user_id):
                            reply_markup=resend_code_kb)
 
 
-@dp.message_handler(lambda message: state_filter(message, auth.UserStates.init))
+@dp.message_handler(lambda message: state_filter(message, auth.UserStates.init), content_types=ContentTypes.ANY)
 async def process_email_message(message: types.Message):
     logger.info(f"User {message.from_user.username} ({message.from_user.id}) tried to send email")
     user_id = message.from_user.id
-    if not auth.validate_email(message.text):
+    if not message.text or not auth.validate_email(message.text):
         return await message.answer("You need to send your innopolis email.")
 
     auth.users_data[user_id]["state"] = auth.UserStates.requested_code
@@ -102,10 +102,13 @@ async def process_change_email_callback(callback_query: types.CallbackQuery):
     await bot.answer_callback_query(callback_query.id)
 
 
-@dp.message_handler(lambda message: state_filter(message, auth.UserStates.requested_code))
+@dp.message_handler(lambda message: state_filter(message, auth.UserStates.requested_code), content_types=ContentTypes.ANY)
 async def process_code_message(message: types.Message):
     logger.info(f"User {message.from_user.username} ({message.from_user.id}) tried to enter a code")
     user_id = message.from_user.id
+
+    if not message.text:
+        return await message.answer(f"You need to send confirmation code.")
 
     if "code_attempt" in auth.users_data[user_id]:
         sec = (datetime.now() - auth.users_data[user_id]["code_attempt"]).total_seconds()
