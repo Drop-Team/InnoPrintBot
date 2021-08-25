@@ -8,7 +8,9 @@ from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton, ContentTyp
 from datetime import datetime
 import asyncio
 import logging
+import socket
 
+import config
 from config import TOKEN
 import auth
 import files
@@ -56,6 +58,19 @@ async def process_help_command(message: types.Message):
                          "Support: @blinikar and @KeepError\n"
                          "GitHub: https://github.com/blinikar/innoprintbot",
                          parse_mode="Markdown")
+
+
+@dp.message_handler(lambda message: message.from_user.id in config.ADMINS, commands=["ip"])
+async def process_ip_command(message: types.Message):
+    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    try:
+        s.connect(("10.255.255.255", 1))
+        ip = s.getsockname()[0]
+    except Exception:
+        ip = "127.0.0.1"
+    finally:
+        s.close()
+    await message.answer(ip)
 
 
 async def send_code(user_id):
