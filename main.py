@@ -3,7 +3,7 @@
 from aiogram import Bot, types
 from aiogram.dispatcher import Dispatcher
 from aiogram.utils import executor
-from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
+from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton, ContentTypes
 
 from datetime import datetime
 import asyncio
@@ -140,7 +140,7 @@ async def process_resend_code_callback(callback_query: types.CallbackQuery):
     await bot.answer_callback_query(callback_query.id)
 
 
-@dp.message_handler(lambda message: state_filter(message, auth.UserStates.confirmed), content_types=["any"])
+@dp.message_handler(lambda message: state_filter(message, auth.UserStates.confirmed), content_types=ContentTypes.ANY)
 async def process_print_message(message: types.Message):
     doc = message.document
     if doc is None:

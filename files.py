@@ -2,6 +2,8 @@ from datetime import datetime
 import subprocess
 import os
 
+import config
+
 MAX_FILE_SIZE = 64 * 1024 * 1024
 DELETE_FILES_IN = 10
 FILES_PATH = "printed_files/"
@@ -26,8 +28,11 @@ async def download_file(bot, doc):
 
 
 def print_file(file_path):
-    subprocess.run(["lp", file_path, "-d", "5Fprinter"])
-    print("printing" + file_path)
+    if config.PRINTING_ENABLED:
+        subprocess.run(["lp", file_path, "-d", "5Fprinter"])
+    else:
+        print("PRINTING DISABLED")
+    print("printing " + file_path)
 
 
 async def check_files():
