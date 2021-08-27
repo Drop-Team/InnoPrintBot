@@ -32,7 +32,7 @@ def save_file():
 
 def validate_email(email):
     regex = r"\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b"
-    return re.fullmatch(regex, email) and ("@innopolis.university" in email or "@innopolis.ru" in email)
+    return re.fullmatch(regex, email) and (email.endswith("@innopolis.university") or email.endswith("@innopolis.ru"))
 
 
 def send_mail(user_id):
