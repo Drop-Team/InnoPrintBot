@@ -5,6 +5,8 @@ import re
 
 import config
 
+import metrics
+
 
 class UserStates:
     init = 0
@@ -20,6 +22,7 @@ def read_file():
         authorized_users = {}
     data = {int(user_id): {"email": email, "state": UserStates.confirmed}
             for user_id, email in authorized_users.items()}
+    metrics.save_auth_users_count(data)
     return data
 
 
@@ -28,6 +31,7 @@ def save_file():
                         for user_id, user_data in users_data.items() if user_data["state"] == UserStates.confirmed}
     with open("authorized_users.json", "w") as f:
         json.dump(authorized_users, f)
+    metrics.save_auth_users_count(authorized_users)
 
 
 def validate_email(email):

@@ -1,1 +1,2 @@
 aiogram~=2.14.3
+prometheus-client~=0.11.0
