@@ -29,7 +29,7 @@ async def download_file(bot, doc):
 
 def print_file(file_path):
     if config.PRINTING_ENABLED:
-        subprocess.run(["lp", file_path, "-d", "5Fprinter"])
+        subprocess.run(["lp", file_path, "-o", "sides=one-sided", "-d", "5F-printer"])
     else:
         print("PRINTING DISABLED")
     print("printing " + file_path)
