@@ -223,7 +223,7 @@ async def process_print_message(message: types.Message):
     files.print_file(file_path)
     Metrics.printing.labels("success").inc()
     await msg.edit_text("Done! Go to the printer on 5th floor and take your documents.")
-    await message.answer("We have new scanning function [ALPHA], just use command /scan")
+    # await message.answer("We have new scanning function [ALPHA], just use command /scan")
 
 # @dp.callback_query_handler(lambda cb: cb.data == "scan_start")
 # async def proccess_scan(callback_query: types.CallbackQuery):
