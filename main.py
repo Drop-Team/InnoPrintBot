@@ -225,52 +225,52 @@ async def process_print_message(message: types.Message):
     await msg.edit_text("Done! Go to the printer on 5th floor and take your documents.")
     await message.answer("We have new scanning function [ALPHA], just use command /scan")
 
-@dp.callback_query_handler(lambda cb: cb.data == "scan_start")
-async def proccess_scan(callback_query: types.CallbackQuery):
-    user_id = callback_query.from_user.id
-    if (auth.users_data[user_id]["scanner_type"] != ScanTypes.Flat or 
-        auth.users_data[user_id]["scanner_type"] != ScanTypes.ADF or
-        auth.users_data[user_id]["scanner_type"] != ScanTypes.ADF_Duplex):
-        return await callback_query.answer("You hadn't choose scanner type")
-    #TODO start_scan
-    msg = await callback_query.answer("Scanning in progress...")
+# @dp.callback_query_handler(lambda cb: cb.data == "scan_start")
+# async def proccess_scan(callback_query: types.CallbackQuery):
+#     user_id = callback_query.from_user.id
+#     if (auth.users_data[user_id]["scanner_type"] != ScanTypes.Flat or
+#         auth.users_data[user_id]["scanner_type"] != ScanTypes.ADF or
+#         auth.users_data[user_id]["scanner_type"] != ScanTypes.ADF_Duplex):
+#         return await callback_query.answer("You hadn't choose scanner type")
+#     #TODO start_scan
+#     msg = await callback_query.answer("Scanning in progress...")
 
 
-async def process_scan_confirmation(callback_query: types.CallbackQuery, scanner_type: int): 
-    user_id = callback_query.from_user.id
-    scanner_type_instruction = ""
-    auth.users_data[user_id]["scanner_type"] = scanner_type
-    if scanner_type == ScanTypes.Flat:
-        scanner_type_instruction = "Open the cover -> put your page to the flatbed sided to scanner"
-    elif scanner_type == ScanTypes.ADF:
-        scanner_type_instruction = "Put your document (all pages) on the feeder scan-sided up"
-    elif scanner_type == ScanTypes.ADF_Duplex:
-        scanner_type_instruction = "Put your document (all pages) on the feeder first scan-sided up"
-    instruction = f"See instruction below to use the scanner\n{scanner_type_instruction}"
-    await callback_query.answer(instruction, reply_markup=scan_kb)
+# async def process_scan_confirmation(callback_query: types.CallbackQuery, scanner_type: int):
+#     user_id = callback_query.from_user.id
+#     scanner_type_instruction = ""
+#     auth.users_data[user_id]["scanner_type"] = scanner_type
+#     if scanner_type == ScanTypes.Flat:
+#         scanner_type_instruction = "Open the cover -> put your page to the flatbed sided to scanner"
+#     elif scanner_type == ScanTypes.ADF:
+#         scanner_type_instruction = "Put your document (all pages) on the feeder scan-sided up"
+#     elif scanner_type == ScanTypes.ADF_Duplex:
+#         scanner_type_instruction = "Put your document (all pages) on the feeder first scan-sided up"
+#     instruction = f"See instruction below to use the scanner\n{scanner_type_instruction}"
+#     await callback_query.answer(instruction, reply_markup=scan_kb)
 
-@dp.callback_query_handler(lambda cb: cb.data == "scan_choose_flat")
-async def process_scan_type_flat_callback(callback_query: types.CallbackQuery):
-    process_scan_confirmation(callback_query, ScanTypes.Flat)
-
-@dp.callback_query_handler(lambda cb: cb.data == "scan_choose_adf")
-async def process_scan_type_flat_callback(callback_query: types.CallbackQuery):
-    process_scan_confirmation(callback_query, ScanTypes.ADF)
-
-@dp.callback_query_handler(lambda cb: cb.data == "scan_choose_adf_duplex")
-async def process_scan_type_flat_callback(callback_query: types.CallbackQuery):
-    process_scan_confirmation(callback_query, ScanTypes.ADF_Duplex)
-
-
-@dp.message_handler(lambda message: state_filter(message, auth.UserStates.confirmed), commands=["scan"])
-async def proccess_scan_command(message: types.Message):
-    await message.answer("This function works in ALPHA mode. Unfotunately, after scan, printer will have"
-                        "some rest in several minutes, so you need to scan as much documents as you can")    
-    await message.answer("Choose scanner document source:\n"
-                        "One-page flatbed\n"
-                        "Document feeder one-sided\n"
-                        "Document feeder double-sided scanning", reply_markup=choose_scanner_type_kb)
-    #TODO images
+# @dp.callback_query_handler(lambda cb: cb.data == "scan_choose_flat")
+# async def process_scan_type_flat_callback(callback_query: types.CallbackQuery):
+#     process_scan_confirmation(callback_query, ScanTypes.Flat)
+#
+# @dp.callback_query_handler(lambda cb: cb.data == "scan_choose_adf")
+# async def process_scan_type_flat_callback(callback_query: types.CallbackQuery):
+#     process_scan_confirmation(callback_query, ScanTypes.ADF)
+#
+# @dp.callback_query_handler(lambda cb: cb.data == "scan_choose_adf_duplex")
+# async def process_scan_type_flat_callback(callback_query: types.CallbackQuery):
+#     process_scan_confirmation(callback_query, ScanTypes.ADF_Duplex)
+#
+#
+# @dp.message_handler(lambda message: state_filter(message, auth.UserStates.confirmed), commands=["scan"])
+# async def proccess_scan_command(message: types.Message):
+#     await message.answer("This function works in ALPHA mode. Unfotunately, after scan, printer will have"
+#                         "some rest in several minutes, so you need to scan as much documents as you can")
+#     await message.answer("Choose scanner document source:\n"
+#                         "One-page flatbed\n"
+#                         "Document feeder one-sided\n"
+#                         "Document feeder double-sided scanning", reply_markup=choose_scanner_type_kb)
+#     #TODO images
 
 def repeat(coro, loop):
     asyncio.ensure_future(coro(), loop=loop)
