@@ -8,7 +8,6 @@ from bot.loop import main_loop
 from bot import consts
 import config
 import asyncio
-import time
 
 from bot.info import handlers
 from bot.authorization import handlers
@@ -17,14 +16,6 @@ from bot.scanning import handlers
 
 bot = Bot(token=config.BOT_TOKEN)
 dp = Dispatcher(bot)
-
-#
-# @dp.message_handler()
-async def hi(msg):
-    while True:
-        print(msg.text)
-        time.sleep(3)
-# dp.register_message_handler(hi, lambda msg: msg.text!="/help")
 
 
 async def on_startup(dp):
