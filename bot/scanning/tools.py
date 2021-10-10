@@ -1,7 +1,6 @@
 import asyncio
 from datetime import datetime, timedelta, timezone
 
-import requests
 import aiohttp
 
 from bot.consts import SCANNING_JOB_LIFETIME_MINUTES
@@ -96,12 +95,7 @@ class ScanningJob:
         return ""
 
 
-# kwarg = {'proxies': {"http": "http://10.90.138.234:3128", "https": "http://10.90.138.234:3128"}}
-kwarg = {'proxy': "http://10.90.138.234:3128"}
-
-
 def generate_scan_xml(input_source, duplex, dpi):
-    print(input_source)
     res = f"""
     <?xml version="1.0" encoding="UTF-8"?>
     <scan:ScanSettings xmlns:pwg="http://www.pwg.org/schemas/2010/12/sm" 
