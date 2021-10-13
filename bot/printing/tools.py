@@ -7,6 +7,7 @@ import PyPDF4
 from PyPDF4.utils import PyPdfError
 
 from bot.consts import FILE_LIFETIME_FOR_USER_MINUTES, FILES_PATH
+import config
 
 
 async def download_file(bot, doc):
@@ -112,7 +113,7 @@ class PrintingFile:
 
     def print(self):
         try:
-            command = ["lp", self.file_path, "-d", "5F-Printer", "-P", self.pages, "-n", self.copies]
+            command = ["lp", self.file_path, "-d", config.PRINTER_NAME, "-P", self.pages, "-n", self.copies]
             if not self.double_sided:
                 command += ["-o", "sides=one-sided"]
             subprocess.run(command)

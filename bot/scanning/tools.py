@@ -4,6 +4,7 @@ from datetime import datetime, timedelta, timezone
 import aiohttp
 
 from bot.consts import SCANNING_JOB_LIFETIME_MINUTES
+import config
 
 
 class ScanInputs:
@@ -57,7 +58,7 @@ class ScanningJob:
     async def scan(self):
         session = aiohttp.ClientSession()
 
-        response = await session.post("https://10.90.109.61:9096/eSCL/ScanJobs",
+        response = await session.post(f"{config.SCANNER_URL}/eSCL/ScanJobs",
                                       headers={"Content-Type": "application/xml"},
                                       data=generate_scan_xml(self.get_input_source(), self.get_duplex(), self.dpi),
                                       verify_ssl=False)
