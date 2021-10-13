@@ -15,6 +15,8 @@ class Metrics:
     printing = Counter("printing", "Success printing file", ["type"])
     printing.labels("requests")
     printing.labels("pages")
+    printing.labels("copies")
+    printing.labels("total")
 
     print_file_formats = Counter("print_files_formats", "Formats of files sent to printer", ["format"])
 

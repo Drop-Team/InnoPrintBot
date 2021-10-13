@@ -181,6 +181,8 @@ async def printing_confirm_callback(callback_query):
             logger.info(f"{user.mention} ({user.id}) confirmed printing")
             Metrics.printing.labels("requests").inc()
             Metrics.printing.labels("pages").inc(printing_file.get_pages_count())
+            Metrics.printing.labels("copies").inc(int(printing_file.copies))
+            Metrics.printing.labels("total").inc(int(printing_file.copies) * printing_file.get_pages_count())
 
             await update_printing_file_msg(printing_file)
             printing_files.remove(printing_file)
