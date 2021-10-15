@@ -22,3 +22,7 @@ class Metrics:
 
     scanning = Counter("scanning", "Success scanning", ["type"])
     scanning.labels("requests")
+
+    problem = Counter("problems", "Using problems commands")
+    problem.labels("print")
+    problem.labels("scan")

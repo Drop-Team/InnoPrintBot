@@ -47,6 +47,7 @@ async def privacy_command(msg):
 
 @add_message_handler(commands=["problem_print"])
 async def problem_print_command(msg):
+    Metrics.problem.labels("print").inc()
     answer = "Printer problems:\n\n" \
              "> Check power supply\n" \
              "> Check printer’s display for errors\n" \
@@ -61,6 +62,7 @@ async def problem_print_command(msg):
 
 @add_message_handler(commands=["problem_scan"])
 async def problem_scan_command(msg):
+    Metrics.problem.labels("scan").inc()
     answer = "Scanner problems:\n\n" \
              "> Check power supply\n" \
              "> When the printer starts you need to <b>enter a captcha</b> (follow instructions on the display)\n" \
