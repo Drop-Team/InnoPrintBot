@@ -1,8 +1,11 @@
 from aiogram.types.message import ParseMode
+import os
 
+import config
 from bot.command_tools.message_handlers import add_message_handler
 from bot.metrics import Metrics
 from bot.logger import logger
+from bot.users import users, UserStates
 
 
 @add_message_handler(commands=["start"])
@@ -72,3 +75,24 @@ async def problem_scan_command(msg):
              "(don’t ask why) -> you can reboot printer if that doesn't affect -> enter captcha\n\n" \
              "<i>Support @TessingTech</i>"
     await msg.answer(answer, parse_mode=ParseMode.HTML)
+
+
+@add_message_handler(lambda msg: msg.from_user.id in config.ADMINS and msg.caption and msg.caption.startswith("/mailing"))
+async def mailing_command(msg):
+    if len(msg.caption.split()) < 2 or msg.caption.split()[1] != str(config.MAILING_CONFIRMATION_CODE):
+        return await msg.answer("Code is not correct")
+
+    document = msg.document
+    if not document:
+        return await msg.answer("No document with message")
+
+    destination = "mailing.txt"
+    await document.download(destination)
+    with open(destination, encoding="UTF-8") as f:
+        text = f.read()
+    os.remove(destination)
+
+    receivers = [user_id for user_id in users.keys() if users[user_id].state == UserStates.confirmed]
+    for receiver in receivers:
+        await msg.bot.send_message(receiver, text, parse_mode=ParseMode.HTML,
+                                   disable_web_page_preview=True, disable_notification=True)
