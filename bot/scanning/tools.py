@@ -61,7 +61,8 @@ class ScanningJob:
         response = await session.post(f"{config.SCANNER_URL}/eSCL/ScanJobs",
                                       headers={"Content-Type": "application/xml"},
                                       data=generate_scan_xml(self.get_input_source(), self.get_duplex(), self.dpi),
-                                      verify_ssl=False)
+                                      verify_ssl=False,
+                                      proxy=config.PROXY)
 
         file_url = response.headers.get("Location", None)
         if not file_url:
@@ -71,14 +72,15 @@ class ScanningJob:
         while file_response is None:
             try:
                 await asyncio.sleep(1)
-                file_response = await session.get(file_url + "/NextDocument", raise_for_status=True, verify_ssl=False)
+                file_response = await session.get(file_url + "/NextDocument", raise_for_status=True, verify_ssl=False,
+                                                  proxy=config.PROXY)
             except aiohttp.ServerDisconnectedError:
                 await asyncio.sleep(1)
 
         doc = await file_response.content.read()
         self.scanned = True
 
-        await session.delete(file_url, verify_ssl=False)
+        await session.delete(file_url, verify_ssl=False, proxy=config.PROXY)
 
         await session.close()
 
