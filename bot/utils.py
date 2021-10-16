@@ -2,6 +2,7 @@ from aiogram.types import ParseMode
 
 import random
 
+import consts
 import config
 
 
