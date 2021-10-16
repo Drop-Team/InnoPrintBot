@@ -1,10 +1,11 @@
 #!/usr/bin/env python
 import bot
 from prometheus_client import start_http_server
+import config
 
 
 def main():
-    start_http_server(8000)
+    start_http_server(config.PROMETHEUS_PORT)
     bot.start()
 
 
