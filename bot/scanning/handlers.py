@@ -5,7 +5,6 @@ from aiogram.types.message import ParseMode
 
 from datetime import datetime, timedelta, timezone
 import io
-import asyncio
 
 from bot.command_tools.message_handlers import add_message_handler
 from bot.command_tools.callback_query import add_callback_query
@@ -14,6 +13,7 @@ from bot.scanning import tools
 from bot.metrics import Metrics
 from bot.logger import logger
 from bot.consts import SCANNING_JOB_LIFETIME_MINUTES
+from bot.utils import send_ads
 
 scanning_jobs = []
 active_callbacks = dict()
@@ -224,6 +224,8 @@ async def scanning_confirm_callback(callback_query):
 
             await update_scanning_job_msg(scanning_job)
             scanning_jobs.remove(scanning_job)
+
+            await send_ads(bot, user.id)
         else:
             if doc_content == 409:
                 await msg.answer("Please put the paper in the scanner.")

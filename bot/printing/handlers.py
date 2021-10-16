@@ -13,6 +13,7 @@ from bot.printing import tools
 from bot.metrics import Metrics
 from bot.logger import logger
 from bot.consts import FILE_LIFETIME_MINUTES, FILE_LIFETIME_FOR_USER_MINUTES
+from bot.utils import send_ads
 
 printing_files = []
 active_callbacks = dict()
@@ -186,6 +187,8 @@ async def printing_confirm_callback(callback_query):
 
             await update_printing_file_msg(printing_file)
             printing_files.remove(printing_file)
+
+            await send_ads(bot, user.id)
 
         else:
             logger.info(f"Error while printing")
