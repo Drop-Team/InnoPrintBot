@@ -29,7 +29,7 @@ async def help_command(msg):
     logger.info(f"{user.mention} ({user.id}) used /help")
     answer = "This is @InnoPrintBot - bot for printing on Innopolis University's 5th floor public printer.\n\n" \
              "Official info channel & support - @TessingTech\n\n" \
-             "Scanning tutorial /scan_help\n" \
+             "Scanning tutorial /help_scan\n" \
              "If you have problems with <b>printing</b> /problem_print\n" \
              "If you have problems with <b>scanning</b> /problem_scan\n" \
              "Privacy policy /privacy\n" \
