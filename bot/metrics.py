@@ -1,12 +1,8 @@
 from prometheus_client import Counter, Gauge
 
 
-def save_users_metrics(data):
-    Metrics.users_total.set(len(data))
-
-
 class Metrics:
-    users_total = Gauge("authorized_users_total", "users who confirmed email")
+    users = Gauge("users_total", "users who confirmed email", ["state"])
 
     errors = Counter("errors", "Errors count")
 

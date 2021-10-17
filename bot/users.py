@@ -1,7 +1,22 @@
 import json
 from collections import defaultdict
 
-from bot.metrics import save_users_metrics
+from bot.metrics import Metrics
+
+
+def save_users_metrics(data):
+    users_metrics = {}
+    state_names = {
+        UserStates.init: "init",
+        UserStates.requested_code: "requested_code",
+        UserStates.confirmed: "confirmed"
+    }
+    for user in data.values():
+        state = state_names.get(user.state, "Unknown")
+        users_metrics[state] = users_metrics.get(state, 0) + 1
+
+    for state, value in users_metrics.items():
+        Metrics.users.labels(state).set(value)
 
 
 class UserStates:
