@@ -93,6 +93,12 @@ async def mailing_command(msg):
     os.remove(destination)
 
     receivers = [user_id for user_id in users.keys() if users[user_id].state == UserStates.confirmed]
+    counter = 0
     for receiver in receivers:
-        await msg.bot.send_message(receiver, text, parse_mode=ParseMode.HTML,
-                                   disable_web_page_preview=True, disable_notification=True)
+        try:
+            await msg.bot.send_message(receiver, text, parse_mode=ParseMode.HTML,
+                                       disable_web_page_preview=True, disable_notification=True)
+            counter += 1
+        except Exception as e:
+            pass
+    logger.info(f"Mailing was sent to {counter} users")
