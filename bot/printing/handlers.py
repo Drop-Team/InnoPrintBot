@@ -5,6 +5,7 @@ from aiogram.utils import exceptions
 from aiogram.types.message import ParseMode
 
 from datetime import datetime, timedelta, timezone
+import os
 
 from bot.command_tools.message_handlers import add_message_handler
 from bot.command_tools.callback_query import add_callback_query
@@ -12,7 +13,7 @@ from bot.users import UserStates
 from bot.printing import tools
 from bot.metrics import Metrics
 from bot.logger import logger
-from bot.consts import FILE_LIFETIME_MINUTES, FILE_LIFETIME_FOR_USER_MINUTES
+from bot.consts import FILE_LIFETIME_MINUTES, FILE_LIFETIME_FOR_USER_MINUTES, FILES_PATH
 from bot.utils import send_ads
 
 printing_files = []
@@ -21,6 +22,7 @@ active_callbacks = dict()
 
 async def check_printing_files(dp):
     tzinfo = timezone(timedelta(hours=3))
+
     for printing_file in printing_files:
         difference = (datetime.now(tzinfo) - printing_file.created).seconds
         if difference > FILE_LIFETIME_FOR_USER_MINUTES * 60 and not printing_file.expired:
@@ -28,9 +30,15 @@ async def check_printing_files(dp):
                                               message_id=printing_file.msg.message_id,
                                               caption="File has expired")
             printing_file.expired = True
-        if difference > FILE_LIFETIME_MINUTES * 60:
-            tools.delete_file(printing_file.file_path)
-            printing_files.remove(printing_file)
+
+    now = datetime.now()
+    for fn in os.listdir(FILES_PATH):
+        if fn == ".keep":
+            continue
+
+        mode_time = datetime.fromtimestamp(os.path.getmtime(FILES_PATH + fn))
+        if (now - mode_time).seconds > FILE_LIFETIME_MINUTES * 60:
+            tools.delete_file(FILES_PATH + fn)
 
 
 class PrintKeyboard:
