@@ -2,7 +2,14 @@ from prometheus_client import Counter, Gauge
 
 
 class Metrics:
-    users = Gauge("users_total", "users who confirmed email", ["state"])
+    users = Gauge("users_total", "Users who confirmed email", ["state"])
+
+    messages = Counter("messages", "Total messages received")
+    message_handler_functions = Counter("message_handler_functions", "Raised functions", ["name"])
+    message_handler_commands = Counter("message_handler_commands", "Command names", ["name"])
+
+    callback_queries = Counter("callback_queries", "Total callback queries processed")
+    callback_queries_functions = Counter("callback_queries_functions", "Raised functions", ["name"])
 
     errors = Counter("errors", "Errors count")
 
