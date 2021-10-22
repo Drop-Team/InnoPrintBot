@@ -37,7 +37,7 @@ async def check_printing_files(dp):
             continue
 
         mode_time = datetime.fromtimestamp(os.path.getmtime(FILES_PATH + fn))
-        if (now - mode_time).seconds > FILE_LIFETIME_MINUTES * 60:
+        if (now - mode_time).total_seconds() > FILE_LIFETIME_MINUTES * 60:
             tools.delete_file(FILES_PATH + fn)
 
 
