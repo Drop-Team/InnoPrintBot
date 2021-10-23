@@ -33,7 +33,7 @@ async def help_command(msg):
              "Privacy policy /privacy\n" \
              "Source code - <i>https://github.com/blinikar/innoprintbot</i>\n" \
              "Donate - <i>https://tinkoff.ru/cf/5vE5LgA9E2E</i>"
-    await msg.answer(answer, parse_mode=ParseMode.HTML)
+    await msg.answer(answer, parse_mode=ParseMode.HTML, disable_web_page_preview=True)
 
 
 @add_message_handler(commands=["privacy"])
