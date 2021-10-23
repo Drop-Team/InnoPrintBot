@@ -3,7 +3,6 @@ import os
 
 import config
 from bot.command_tools.message_handlers import add_message_handler
-from bot.metrics import Metrics
 from bot.logger import logger
 from bot.users import users, UserStates
 
@@ -11,7 +10,6 @@ from bot.users import users, UserStates
 @add_message_handler(commands=["start"])
 async def start_command(msg):
     user = msg.from_user
-    Metrics.start_command.inc()
     logger.info(f"{user.mention} ({user.id}) used /start")
     answer = "Welcome! @InnoPrintBot is a bot for easy printer access in Innopolis University’s 5th floor public " \
              "printer.\n\n" \
@@ -50,7 +48,6 @@ async def privacy_command(msg):
 
 @add_message_handler(commands=["problem_print"])
 async def problem_print_command(msg):
-    Metrics.problem.labels("print").inc()
     answer = "Printer problems:\n\n" \
              "> Check power supply\n" \
              "> Check printer’s display for errors\n" \
@@ -65,7 +62,6 @@ async def problem_print_command(msg):
 
 @add_message_handler(commands=["problem_scan"])
 async def problem_scan_command(msg):
-    Metrics.problem.labels("scan").inc()
     answer = "Scanner problems:\n\n" \
              "> Check power supply\n" \
              "> When the printer starts you need to <b>enter a captcha</b> (follow instructions on the display)\n" \

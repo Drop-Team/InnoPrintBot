@@ -2,7 +2,7 @@ from prometheus_client import Counter, Gauge
 
 
 class Metrics:
-    users = Gauge("users_total", "Users who confirmed email", ["state"])
+    users = Gauge("users_total", "Total users count", ["state"])
 
     messages = Counter("messages", "Total messages received")
     message_handler_functions = Counter("message_handler_functions", "Raised functions", ["name"])
@@ -12,8 +12,6 @@ class Metrics:
     callback_queries_functions = Counter("callback_queries_functions", "Raised functions", ["name"])
 
     errors = Counter("errors", "Errors count")
-
-    start_command = Counter("start_command", "Using /start command")
 
     printing = Counter("printing", "Success printing file", ["type"])
     printing.labels("requests")
@@ -25,7 +23,3 @@ class Metrics:
 
     scanning = Counter("scanning", "Success scanning", ["type"])
     scanning.labels("requests")
-
-    problem = Counter("problem", "Using problems commands", ["type"])
-    problem.labels("print")
-    problem.labels("scan")

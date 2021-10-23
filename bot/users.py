@@ -15,8 +15,9 @@ def save_users_metrics(data):
         state = state_names.get(user.state, "Unknown")
         users_metrics[state] = users_metrics.get(state, 0) + 1
 
-    for state, value in users_metrics.items():
-        Metrics.users.labels(state).set(value)
+    for state_name in state_names.values():
+        value = users_metrics.get(state_name, 0)
+        Metrics.users.labels(state_name).set(value)
 
 
 class UserStates:
