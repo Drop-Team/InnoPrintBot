@@ -11,7 +11,7 @@ class Metrics:
     callback_queries = Counter("callback_queries", "Total callback queries processed")
     callback_queries_functions = Counter("callback_queries_functions", "Raised functions", ["name"])
 
-    errors = Counter("errors", "Errors count")
+    logs = Counter("logs", "log records", ["name", "level"])
 
     printing = Counter("printing", "Success printing file", ["type"])
     printing.labels("requests")
