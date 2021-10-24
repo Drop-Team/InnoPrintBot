@@ -14,6 +14,8 @@ from bot.authorization import handlers
 from bot.printing import handlers
 from bot.scanning import handlers
 
+from bot.metrics import Metrics
+
 bot = Bot(token=config.BOT_TOKEN)
 dp = Dispatcher(bot)
 
@@ -21,6 +23,7 @@ dp = Dispatcher(bot)
 async def on_startup(dp):
     bot_info = await bot.get_me()
     print(f"Logged in as {bot_info.full_name} ({bot_info.mention})")
+    Metrics.start_time.set_to_current_time()
 
 
 def start():

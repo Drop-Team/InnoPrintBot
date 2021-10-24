@@ -2,6 +2,8 @@ from prometheus_client import Counter, Gauge
 
 
 class Metrics:
+    start_time = Gauge("start_time", "Start time")
+
     users = Gauge("users_total", "Total users count", ["state"])
 
     messages = Counter("messages", "Total messages received")
