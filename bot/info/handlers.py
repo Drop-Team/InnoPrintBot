@@ -10,7 +10,6 @@ from bot.users import users, UserStates
 @add_message_handler(commands=["start"])
 async def start_command(msg):
     user = msg.from_user
-    logger.info(f"{user.mention} ({user.id}) used /start")
     answer = "Welcome! @InnoPrintBot is a bot for easy printer access in Innopolis University’s 5th floor public " \
              "printer.\n\n" \
              "You can send a file to print it, or use /scan to scan your documents." \
@@ -24,7 +23,6 @@ async def start_command(msg):
 @add_message_handler(commands=["help"])
 async def help_command(msg):
     user = msg.from_user
-    logger.info(f"{user.mention} ({user.id}) used /help")
     answer = "This is @InnoPrintBot - bot for printing on Innopolis University's 5th floor public printer.\n\n" \
              "Official info channel & support - @TessingTech\n\n" \
              "Scanning tutorial /help_scan\n" \
