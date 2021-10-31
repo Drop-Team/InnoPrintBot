@@ -7,4 +7,4 @@ ADS_MESSAGES = ["💰 If you like our products you can help us with a small dona
                 "🦿 We have improved our bot functionality and added /scan function",
                 "✍ We have improved our bot functionality and want to have some feedback, please fill this form for "
                 "us: https://forms.gle/EHuvC3NiVMg9pfan8",
-                "📣 If you like our products, follow our official channel @TessingTeam"]
+                "📣 If you like our products, follow our official channel @TessingTech"]

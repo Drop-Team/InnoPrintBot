@@ -28,7 +28,7 @@ async def check_printing_files(dp):
         if difference > FILE_LIFETIME_FOR_USER_MINUTES * 60 and not printing_file.expired:
             await dp.bot.edit_message_caption(chat_id=printing_file.msg.chat.id,
                                               message_id=printing_file.msg.message_id,
-                                              caption="File has expired")
+                                              caption="🔥 File has expired")
             printing_file.expired = True
 
     now = datetime.now()
@@ -42,18 +42,18 @@ async def check_printing_files(dp):
 
 
 class PrintKeyboard:
-    edit_pages = InlineKeyboardButton("Edit pages range", callback_data="printing_edit_pages")
-    change_copies = InlineKeyboardButton("Change copies count", callback_data="printing_change_copies")
+    edit_pages = InlineKeyboardButton("📄 Edit pages range", callback_data="printing_edit_pages")
+    change_copies = InlineKeyboardButton("🗞 Change copies count", callback_data="printing_change_copies")
     change_double_sided = InlineKeyboardButton("...", callback_data="printing_change_double_sided")
-    confirm = InlineKeyboardButton("Confirm", callback_data="printing_confirm")
-    cancel = InlineKeyboardButton("Cancel", callback_data="printing_cancel")
+    confirm = InlineKeyboardButton("✅ Confirm", callback_data="printing_confirm")
+    cancel = InlineKeyboardButton("❌ Cancel", callback_data="printing_cancel")
 
     @classmethod
     def get_markup(cls, printing_file):
         res = InlineKeyboardMarkup()
         res.row(cls.edit_pages)
         res.row(cls.change_copies)
-        cls.change_double_sided.text = f"{'Disable' if printing_file.double_sided else 'Enable'} both sides printing"
+        cls.change_double_sided.text = f"📑 {'Disable' if printing_file.double_sided else 'Enable'} both sides printing"
         res.row(cls.change_double_sided)
         res.row(cls.confirm, cls.cancel)
         return res
@@ -100,7 +100,7 @@ async def print_file(msg):
     if doc is None:
         return await msg.answer("Please send the document you want to print.")
 
-    await msg.answer("Preparing your document...")
+    await msg.answer("⏳ Preparing your document...")
 
     logger.info(f"{user.mention} ({user.id}) sent document")
     Metrics.print_file_formats.labels(doc.mime_type).inc()
@@ -108,11 +108,11 @@ async def print_file(msg):
     try:
         temp_path = await tools.download_file(msg.bot, doc)
     except exceptions.FileIsTooBig:
-        return await msg.answer("File is too big")
+        return await msg.answer("⚠ File is too big")
 
     file_path, is_converted = tools.convert_file(temp_path)
     if not file_path:
-        return await msg.answer("File is not supported")
+        return await msg.answer("⚠ File is not supported")
 
     printing_file = tools.PrintingFile(file_path)
 
@@ -200,7 +200,7 @@ async def printing_confirm_callback(callback_query):
 
         else:
             logger.info(f"Error while printing")
-            await msg.answer("An unknown error occurred while printing")
+            await msg.answer("⚠ An unknown error occurred while printing")
 
     await bot.answer_callback_query(callback_query.id)
 
@@ -225,7 +225,7 @@ async def receive_callback_query_answer(msg):
                 await msg.answer("Copies count changed", reply_markup=ReplyKeyboardRemove())
                 remove_active_callback = True
             else:
-                await msg.answer("You should send number of copies. For example: 3")
+                await msg.answer("⚠ You should send number of copies. For example: 3")
 
         elif callback_data == PrintKeyboard.edit_pages.callback_data:
             if tools.validate_pages_range(text):
@@ -234,7 +234,7 @@ async def receive_callback_query_answer(msg):
                 await msg.answer("Pages range changed", reply_markup=ReplyKeyboardRemove())
                 remove_active_callback = True
             else:
-                await msg.answer("You should send range of pages. For example: 2-6,8,10-11")
+                await msg.answer("⚠ You should send range of pages. For example: 2-6,8,10-11")
 
     else:
         await msg.answer("Input cancelled", reply_markup=ReplyKeyboardRemove())

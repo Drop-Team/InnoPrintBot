@@ -30,7 +30,7 @@ async def send_code(bot, user_id):
     set_check(user_id, Checks.CodeSending)
     save_file()
 
-    await bot.send_message(user_id, "Check your email and send confirmation code within 10 minutes.")
+    await bot.send_message(user_id, "📧 Check your email and enter confirmation code within 10 minutes.")
 
 
 @add_message_handler(user_state=UserStates.init)
@@ -40,7 +40,7 @@ async def receive_email(msg):
 
     text = msg.text
     if not text or not tools.validate_email(text):
-        answer = "You have to send your Innopolis email.\n" \
+        answer = "⚠ You have to send your Innopolis email.\n" \
                  "We will send confirmation code " \
                  "to make sure that you are a student or an employee of Innopolis University."
         return await msg.answer(answer)
@@ -63,24 +63,24 @@ async def receive_code(msg):
 
     text = msg.text
     if not text:
-        return await msg.answer(f"You have to send confirmation code.")
+        return await msg.answer(f"⚠ You have to send confirmation code.")
 
     if not validate_cooldown(user.id, Checks.CodeAttempt):
         remain = get_remain_time(user.id, Checks.CodeAttempt)
         return await msg.answer(f"You can attempt a code again in {remain} sec.")
 
     if not validate_lifetime(user.id, Checks.CodeSending):
-        return await msg.answer(f"Code is already inactive. You need to request it again.")
+        return await msg.answer(f"⚠ Code is already inactive. You need to request it again.")
 
     set_check(user.id, Checks.CodeAttempt)
 
     if not tools.validate_code(user.id, text):
-        return await msg.answer("Code is incorrect")
+        return await msg.answer("⚠ Code is incorrect")
 
     users[user.id].state = UserStates.confirmed
     save_file()
 
-    answer = "Great! All ready to print your documents. You can do this by simply sending a file here.\n" \
+    answer = "👌 Great! All ready to print your documents. You can do this by simply sending a file here.\n" \
              "Also it is possible to /scan your documents."
     await msg.answer(answer, reply_markup=ReplyKeyboardRemove(), parse_mode=ParseMode.HTML)
 

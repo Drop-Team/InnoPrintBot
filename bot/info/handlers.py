@@ -10,13 +10,13 @@ from bot.users import users, UserStates
 @add_message_handler(commands=["start"])
 async def start_command(msg):
     user = msg.from_user
-    answer = "Welcome! @InnoPrintBot is a bot for easy printer access in Innopolis University’s 5th floor public " \
+    answer = "👋 Welcome! @InnoPrintBot is a bot for easy printer access in Innopolis University’s 5th floor public " \
              "printer.\n\n" \
-             "You can send a file to print it, or use /scan to scan your documents." \
+             "📎 You can send a file to print it, or use /scan to scan your documents." \
              "\n\n" \
              "<i>By continuing, you confirm our privacy policy /privacy</i>\n\n" \
              "<i>If something went wrong, please go to the support channel - @TessingTech</i>\n\n" \
-             "<b>First, you need to sign up. Enter your Innopolis email.</b>"
+             "<b>✏ First, you need to sign up. Enter your Innopolis email.</b>"
     await msg.answer(answer, parse_mode=ParseMode.HTML)
 
 

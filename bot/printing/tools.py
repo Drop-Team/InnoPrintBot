@@ -93,20 +93,20 @@ class PrintingFile:
             status_msg = "<i>File sent to printer.</i>"
         else:
             time = (self.created + timedelta(minutes=FILE_LIFETIME_FOR_USER_MINUTES)).strftime("%H:%M")
-            status_msg = f"<i>File will be deleted in {FILE_LIFETIME_FOR_USER_MINUTES} min (at {time} MSK).</i>"
+            status_msg = f"<i>🧨 File will be deleted in {FILE_LIFETIME_FOR_USER_MINUTES} min (at {time} MSK).</i>"
 
         converted_msg = ""
         if self.converted:
             converted_msg = "\n\n<i>Consider that your document has been converted into PDF format. " \
                             "It may lose some format features. Please check the preview.</i>"
 
-        res = f"{'<b>Your document is ready to print</b>' if not self.printed else ''}" \
+        res = f"{'<b>🔮 Your document is ready to print</b>' if not self.printed else ''}" \
               f"" \
               f"{converted_msg}\n\n" \
               f"<i>Parameters (not applied on preview)</i>\n" \
-              f"Pages: <b>{self.pages}</b> (total: <b>{self.get_pages_count()}</b>)\n" \
-              f"Copies: <b>{self.copies}</b>\n" \
-              f"Printing on both sides of the sheet: <b>{'On' if self.double_sided else 'Off'}</b>" \
+              f"📄 Pages: <b>{self.pages}</b> (total: <b>{self.get_pages_count()}</b>)\n" \
+              f"🗞 Copies: <b>{self.copies}</b>\n" \
+              f"📑 Printing on both sides: <b>{'On' if self.double_sided else 'Off'}</b>" \
               f"\n\nIf you have some problems, use /problem_print" \
               f"\n\n" + status_msg
         return res

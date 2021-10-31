@@ -26,7 +26,7 @@ async def check_scanning_jobs(dp):
         if difference > SCANNING_JOB_LIFETIME_MINUTES * 60:
             await dp.bot.edit_message_text(chat_id=scanning_job.msg.chat.id,
                                            message_id=scanning_job.msg.message_id,
-                                           text="Scanning has expired")
+                                           text="🔥 Scanning has expired")
             scanning_jobs.remove(scanning_job)
 
 
@@ -39,10 +39,10 @@ class ActiveCallback:
 
 class ScanKeyboard:
     change_input = InlineKeyboardButton("...", callback_data="scanning_change_input")
-    change_dpi = InlineKeyboardButton("Change quality (DPI)", callback_data="scanning_change_dpi")
+    change_dpi = InlineKeyboardButton("📐 Change quality (DPI)", callback_data="scanning_change_dpi")
     change_double_sided = InlineKeyboardButton("...", callback_data="scanning_change_double_sided")
-    confirm = InlineKeyboardButton("Confirm", callback_data="scanning_confirm")
-    cancel = InlineKeyboardButton("Cancel", callback_data="scanning_cancel")
+    confirm = InlineKeyboardButton("✅ Confirm", callback_data="scanning_confirm")
+    cancel = InlineKeyboardButton("❌ Cancel", callback_data="scanning_cancel")
 
     @classmethod
     def get_markup(cls, scanning_job):
@@ -50,12 +50,12 @@ class ScanKeyboard:
 
         other_scan_input = tools.ScanInputs.ADF if scanning_job.scan_input == tools.ScanInputs.Platen \
             else tools.ScanInputs.Platen
-        cls.change_input.text = "Change input to " + other_scan_input.name
+        cls.change_input.text = "📮 Change input to " + other_scan_input.name
 
         res.row(cls.change_input)
         if scanning_job.scan_input.available_double_side:
-            cls.change_double_sided.text = ("Disable" if scanning_job.double_sided else "Enable") + " double sided " \
-                                                                                                    "scanning"
+            cls.change_double_sided.text = "📑 " + ("Disable" if scanning_job.double_sided else "Enable") +\
+                                           " double sided scanning"
             res.row(cls.change_double_sided)
         res.row(cls.change_dpi)
         res.row(cls.confirm, cls.cancel)
@@ -150,7 +150,9 @@ async def scanning_change_dpi_callback(callback_query):
 
     scanning_job = get_scanning_job_by_msg(msg)
     if scanning_job:
-        wait_msg = await msg.answer("Select DPI", reply_markup=ChangeDPIKeyboard.get_markup())
+        msg_text = "Select DPI\n" \
+                   "<i>Higher-resolution causes larger file size and increases scanning duration</i>"
+        wait_msg = await msg.answer(msg_text, reply_markup=ChangeDPIKeyboard.get_markup(), parse_mode=ParseMode.HTML)
         active_callbacks[user.id] = ActiveCallback(cb_data, scanning_job, wait_msg)
 
     await bot.answer_callback_query(callback_query.id)
@@ -228,6 +230,6 @@ async def scanning_confirm_callback(callback_query):
             await send_ads(bot, user.id)
         else:
             if doc_content == 409:
-                await msg.answer("Please put the paper in the scanner.")
+                await msg.answer("⚠ Please put the paper in the scanner.")
             else:  # Error 503 and other
-                await msg.answer("Unfortunately, the scanner is currently busy. Try again in a few seconds.")
+                await msg.answer("⚠ Unfortunately, the scanner is currently busy. Try again in a few seconds.")
