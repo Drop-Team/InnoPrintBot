@@ -1,4 +1,4 @@
-from bot.users import users
+from bot.users import UserStates, is_user_authorized
 
 from bot.logger import logger
 from bot.metrics import Metrics
@@ -32,6 +32,14 @@ def check_not_command(msg):
     return True
 
 
+def check_state(user_tg_id: int, user_state: int):
+    result = is_user_authorized(user_tg_id)
+    if user_state == UserStates.confirmed:
+        return result
+    else:
+        return not result
+
+
 class MessageHandler:
     def __init__(self, func, custom_filters, commands, content_types, user_state, text, text_blacklist, not_command):
         self.func = get_new_function(func)
@@ -39,7 +47,7 @@ class MessageHandler:
         self.commands = commands
         self.content_types = ["any"] if content_types is None else content_types
         if user_state is not None:
-            self.custom_filters.append(lambda msg: users[msg.from_user.id].state == user_state)
+            self.custom_filters.append(lambda msg: check_state(msg.from_user.id, user_state))
         if text is not None:
             self.custom_filters.append(lambda msg: msg.text == text)
         if text_blacklist is not None:

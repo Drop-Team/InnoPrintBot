@@ -10,7 +10,6 @@ import config
 import asyncio
 
 from bot.info import handlers
-from bot.authorization import handlers
 from bot.printing import handlers
 from bot.scanning import handlers
 

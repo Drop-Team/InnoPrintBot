@@ -1,49 +1,34 @@
+import requests
+
 import json
 from collections import defaultdict
 
-from bot.metrics import Metrics
-
-
-def save_users_metrics(data):
-    users_metrics = {}
-    state_names = {
-        UserStates.init: "init",
-        UserStates.requested_code: "requested_code",
-        UserStates.confirmed: "confirmed"
-    }
-    for user in data.values():
-        state = state_names.get(user.state, "Unknown")
-        users_metrics[state] = users_metrics.get(state, 0) + 1
-
-    for state_name in state_names.values():
-        value = users_metrics.get(state_name, 0)
-        Metrics.users.labels(state_name).set(value)
+import config
 
 
 class UserStates:
     init = 0
-    requested_code = 1
     confirmed = 10
 
 
 class User:
-    def __init__(self, email=None):
-        self.state = UserStates.init
-        self.email = email
-        self.confirmation_code = None
+    def __init__(self):
         self.used_scan = False
 
     def to_dict(self):
         return {
-            "state": self.state,
-            "email": self.email,
             "used_scan": self.used_scan
         }
 
     def from_dict(self, data):
-        self.state = data["state"]
-        self.email = data["email"]
         self.used_scan = data.get("used_scan", False)
+
+
+def is_user_authorized(user_tg_id: int):
+    result = requests.get(f"{config.INNOID_API_URL}/users/{user_tg_id}",
+                          headers={"Authorization": f"Bearer {config.INNOID_API_TOKEN}"})
+    if result.status_code == 200:
+        return result.json()["is_authorized"]
 
 
 def read_file():
@@ -59,8 +44,6 @@ def read_file():
         user.from_dict(data[user_id])
         result[int(user_id)] = user
 
-    save_users_metrics(result)
-
     return result
 
 
@@ -68,8 +51,6 @@ def save_file():
     data = {str(user_id): user.to_dict() for user_id, user in users.items()}
     with open("users.json", "w") as f:
         json.dump(data, f)
-
-    save_users_metrics(users)
 
 
 users = read_file()

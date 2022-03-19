@@ -4,25 +4,27 @@ import os
 import config
 from bot.command_tools.message_handlers import add_message_handler
 from bot.logger import logger
-from bot.users import users, UserStates
+from bot.users import users, UserStates, is_user_authorized
 
 
 @add_message_handler(commands=["start"])
 async def start_command(msg):
-    user = msg.from_user
+    is_authorized = is_user_authorized(msg.from_user.id)
     answer = "👋 Welcome! @InnoPrintBot is a bot for easy printer access in Innopolis University’s 5th floor public " \
              "printer.\n\n" \
              "📎 You can send a file to print it, or use /scan to scan your documents." \
              "\n\n" \
              "<i>By continuing, you confirm our privacy policy /privacy</i>\n\n" \
-             "<i>If something went wrong, please go to the support channel - @TessingTech</i>\n\n" \
-             "<b>✏ First, you need to sign up. Enter your Innopolis email.</b>"
+             "<i>If something went wrong, please go to the support channel - @TessingTech</i>\n\n"
+    if is_authorized:
+        answer += "<b>✏ You are already logged in via InnoID, just send the file to print or use the /scan command.</b>"
+    else:
+        answer += "<b>✏ First, you need to sign up. Go to the @InnoIDBot for authorization.</b>"
     await msg.answer(answer, parse_mode=ParseMode.HTML)
 
 
 @add_message_handler(commands=["help"])
 async def help_command(msg):
-    user = msg.from_user
     answer = "This is @InnoPrintBot - bot for printing on Innopolis University's 5th floor public printer.\n\n" \
              "Official info channel & support - @TessingTech\n\n" \
              "Scanning tutorial /help_scan\n" \
