@@ -32,20 +32,20 @@ class ScanningJob:
     def generate_message_text(self):
         double_sided_text = ""
         if self.scan_input.available_double_side:
-            double_sided_text = f"📑 Scanning from both sides: <b>{'On' if self.double_sided else 'Off'}</b>\n"
+            double_sided_text = f"Scanning from both sides: <b>{'On' if self.double_sided else 'Off'}</b>\n"
 
         if self.scanned:
             status_msg = "<i>Scanning completed.</i>"
         else:
             time = (self.created + timedelta(minutes=SCANNING_JOB_LIFETIME_MINUTES)).strftime("%H:%M")
-            status_msg = f"<i>🧨 Scanning will be cancelled in {SCANNING_JOB_LIFETIME_MINUTES} min (at {time} MSK).</i>"
+            status_msg = f"<i>🧨 ScannMesing will be cancelled in {SCANNING_JOB_LIFETIME_MINUTES} min (at {time} MSK).</i>"
 
-        res = f"<b>🔮 Ready to scan</b>\n" \
+        res = f"🔮 Ready to scan\n" \
               f"Put your documents into scanner\n\n" \
               f"<i>Parameters:</i>\n" \
-              f"📮 Input: <b>{self.scan_input.name}</b>\n" \
+              f"Input: <b>{self.scan_input.name}</b>\n" \
               f"{double_sided_text}" \
-              f"📐 Quality: <b>{self.dpi}</b> DPI\n\n" \
+              f"Quality: <b>{self.dpi}</b> DPI\n\n" \
               f"To get tutorial use /help_scan\n" \
               f"If you have some problems, use /problem_scan\n\n" \
               f"{status_msg}"

@@ -39,7 +39,7 @@ class ActiveCallback:
 
 class ScanKeyboard:
     change_input = InlineKeyboardButton("...", callback_data="scanning_change_input")
-    change_dpi = InlineKeyboardButton("📐 Change quality (DPI)", callback_data="scanning_change_dpi")
+    change_dpi = InlineKeyboardButton("Change quality (DPI)", callback_data="scanning_change_dpi")
     change_double_sided = InlineKeyboardButton("...", callback_data="scanning_change_double_sided")
     confirm = InlineKeyboardButton("✅ Confirm", callback_data="scanning_confirm")
     cancel = InlineKeyboardButton("❌ Cancel", callback_data="scanning_cancel")
@@ -50,11 +50,11 @@ class ScanKeyboard:
 
         other_scan_input = tools.ScanInputs.ADF if scanning_job.scan_input == tools.ScanInputs.Platen \
             else tools.ScanInputs.Platen
-        cls.change_input.text = "📮 Change input to " + other_scan_input.name
+        cls.change_input.text = "Change input to " + other_scan_input.name
 
         res.row(cls.change_input)
         if scanning_job.scan_input.available_double_side:
-            cls.change_double_sided.text = "📑 " + ("Disable" if scanning_job.double_sided else "Enable") +\
+            cls.change_double_sided.text = ("Disable" if scanning_job.double_sided else "Enable") +\
                                            " double sided scanning"
             res.row(cls.change_double_sided)
         res.row(cls.change_dpi)

@@ -42,8 +42,8 @@ async def check_printing_files(dp):
 
 
 class PrintKeyboard:
-    edit_pages = InlineKeyboardButton("📄 Edit pages range", callback_data="printing_edit_pages")
-    change_copies = InlineKeyboardButton("🗞 Change copies count", callback_data="printing_change_copies")
+    edit_pages = InlineKeyboardButton("Edit pages range", callback_data="printing_edit_pages")
+    change_copies = InlineKeyboardButton("Change copies count", callback_data="printing_change_copies")
     change_double_sided = InlineKeyboardButton("...", callback_data="printing_change_double_sided")
     confirm = InlineKeyboardButton("✅ Confirm", callback_data="printing_confirm")
     cancel = InlineKeyboardButton("❌ Cancel", callback_data="printing_cancel")
@@ -53,7 +53,7 @@ class PrintKeyboard:
         res = InlineKeyboardMarkup()
         res.row(cls.edit_pages)
         res.row(cls.change_copies)
-        cls.change_double_sided.text = f"📑 {'Disable' if printing_file.double_sided else 'Enable'} both sides printing"
+        cls.change_double_sided.text = f"{'Disable' if printing_file.double_sided else 'Enable'} both sides printing"
         res.row(cls.change_double_sided)
         res.row(cls.confirm, cls.cancel)
         return res
@@ -116,12 +116,12 @@ async def print_file(msg):
 
     printing_file = tools.PrintingFile(file_path)
 
+    printing_file.converted = is_converted
     doc = InputFile(file_path, "preview.pdf")
     target_msg = await msg.answer_document(document=doc, caption=printing_file.generate_caption_text(),
                                            reply_markup=PrintKeyboard.get_markup(printing_file),
                                            parse_mode=ParseMode.HTML)
     printing_file.msg = target_msg
-    printing_file.converted = is_converted
     printing_files.append(printing_file)
 
 

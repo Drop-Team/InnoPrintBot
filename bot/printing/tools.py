@@ -67,7 +67,7 @@ class PrintingFile:
 
         self.copies = "1"
 
-        self.double_sided = False
+        self.double_sided = True
 
         self.printed = False
         self.expired = False
@@ -97,16 +97,21 @@ class PrintingFile:
 
         converted_msg = ""
         if self.converted:
-            converted_msg = "\n\n<i>Consider that your document has been converted into PDF format. " \
-                            "It may lose some format features. Please check the preview.</i>"
+            converted_msg = "\n\n⚠ Your document has been converted into PDF format. " \
+                            "It may lose some format features. " \
+                            "Check the preview."
 
-        res = f"{'<b>🔮 Your document is ready to print</b>' if not self.printed else ''}" \
+        auto_double_sided_msg = "⚡ <b>Printing on both sides of the sheet is enabled by default " \
+                                "due to the high cost of the paper.</b>"
+
+        res = f"{'🔮 Your document is ready to be printed' if not self.printed else ''}" \
               f"" \
               f"{converted_msg}\n\n" \
-              f"<i>Parameters (not applied on preview)</i>\n" \
-              f"📄 Pages: <b>{self.pages}</b> (total: <b>{self.get_pages_count()}</b>)\n" \
-              f"🗞 Copies: <b>{self.copies}</b>\n" \
-              f"📑 Printing on both sides: <b>{'On' if self.double_sided else 'Off'}</b>" \
+              f"{auto_double_sided_msg}\n\n" \
+              f"<i>Parameters</i> (not applied on preview):\n" \
+              f"Pages: <b>{self.pages}</b> (total: <b>{self.get_pages_count()}</b>)\n" \
+              f"Copies: <b>{self.copies}</b>\n" \
+              f"Printing on both sides: <b>{'On' if self.double_sided else 'Off'}</b>" \
               f"\n\nIf you have some problems, use /problem_print" \
               f"\n\n" + status_msg
         return res
