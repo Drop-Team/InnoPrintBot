@@ -38,7 +38,7 @@ class ScanningJob:
             status_msg = "<i>Scanning completed.</i>"
         else:
             time = (self.created + timedelta(minutes=SCANNING_JOB_LIFETIME_MINUTES)).strftime("%H:%M")
-            status_msg = f"<i>🧨 ScannMesing will be cancelled in {SCANNING_JOB_LIFETIME_MINUTES} min (at {time} MSK).</i>"
+            status_msg = f"<i>🧨 Scanning will be cancelled in {SCANNING_JOB_LIFETIME_MINUTES} min (at {time} MSK).</i>"
 
         res = f"🔮 Ready to scan\n" \
               f"Put your documents into scanner\n\n" \
