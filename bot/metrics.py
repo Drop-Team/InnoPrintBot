@@ -1,8 +1,29 @@
+import socket
+
 from prometheus_client import Counter, Gauge
+
+import config
+
+
+async def is_port_open(ip: str, port: int) -> bool:
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s.settimeout(1)
+
+    try:
+        s.connect((ip, port))
+        return True
+    except:
+        return False
+
+
+async def is_connected_to_printer_update():
+    is_printer_available = await is_port_open(config.PRINTER_IP, 9100)
+    Metrics.is_connected.set(int(is_printer_available))
 
 
 class Metrics:
     start_time = Gauge("start_time", "Start time")
+    is_connected = Gauge("is_connected", "Is connected to printer")
 
     messages = Counter("messages", "Total messages received")
     message_handler_functions = Counter("message_handler_functions", "Raised functions", ["name"])
