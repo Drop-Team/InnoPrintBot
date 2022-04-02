@@ -23,7 +23,7 @@ async def is_connected_to_printer_update():
 
 class Metrics:
     start_time = Gauge("start_time", "Start time")
-    is_connected = Gauge("is_connected", "Is connected to printer")
+    is_connected = Gauge("printer_connected", "Is connected to printer")
 
     messages = Counter("messages", "Total messages received")
     message_handler_functions = Counter("message_handler_functions", "Raised functions", ["name"])
