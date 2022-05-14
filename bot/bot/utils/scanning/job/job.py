@@ -6,6 +6,8 @@ from PyPDF4 import PdfFileMerger
 from aiogram import types
 
 from bot.utils.jobs import job
+from bot.utils.logs.logger import logger
+from bot.utils.metrics import metrics
 from . import states, properties
 from .keyboard import ScanJobKeyboard, MultiScanKeyboard
 from ..escl.scanning import scan_document
@@ -99,6 +101,10 @@ class ScanJob(job.Job):
     async def scan_document(self) -> str:
         """Scan document and send it to the chat"""
 
+        metrics.scanning.labels("default").inc()
+        logger.info(f"{self._author.mention} ({self._author.id}) scanned document in default mode "
+                    f"with parameters {self._properties.get_logger_text()}")
+
         await self.set_state(states.WaitingForDocumentState)
 
         try:
@@ -115,15 +121,19 @@ class ScanJob(job.Job):
     async def multiscan_next_document(self) -> str:
         """Scan next document in MultiScan mode"""
 
+        metrics.scanning.labels("multiscan").inc()
+        logger.info(f"{self._author.mention} ({self._author.id}) scanned document in multiscan mode "
+                    f"with parameters {self._properties.get_logger_text()}")
+
         await self.set_state(states.WaitingForDocumentState)
 
         try:
-            pdf_document_bytes = await scan_document(self._properties.get_source_properties())
+            pdf_document = await scan_document(self._properties.get_source_properties())
 
             if not self._pdf_merger:
                 self._pdf_merger = PdfFileMerger()
 
-            self._pdf_merger.append(io.BytesIO(pdf_document_bytes))
+            self._pdf_merger.append(io.BytesIO(pdf_document))
 
         except ScanningException as e:
             return str(e)

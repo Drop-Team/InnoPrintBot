@@ -27,3 +27,10 @@ printing.labels("pages_total")
 print_files_extensions = Counter(
     "print_files_extensions", "Extensions of files submitted for printing", ["extension"]
 )
+
+
+scanning = Counter(
+    "scanning", "Confirmed scan jobs", ["type"]
+)
+scanning.labels("default")
+scanning.labels("multiscan")
