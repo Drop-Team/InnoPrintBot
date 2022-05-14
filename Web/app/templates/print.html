@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Print</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', path='styles/styles.css') }}">
+</head>
+<body>
+<div class="container">
+    <div class="options">
+        <div class="layout">
+            <div class="title">Layout</div>
+            <div class="option-elements">
+                <div class="switcher">
+                    <button id="layout-1" class="select-button">1x1</button>
+                    <button id="layout-4" class="select-button">2x2</button>
+                    <button id="layout-9" class="select-button">3x3</button>
+                </div>
+            </div>
+        </div>
+        <div class="print-on">
+            <div class="title">Print on</div>
+            <div class="option-elements">
+                <div class="switcher">
+                    <button id="print-on-one-side" class="select-button">One side</button>
+                    <button id="print-on-both-sides" class="select-button">Both sides</button>
+                </div>
+            </div>
+        </div>
+        <div class="copies">
+            <div class="title">Copies</div>
+            <div class="option-elements">
+                <div class="number-spinner">
+                    <button class="number-spinner-minus">-</button>
+                    <input id="copies-input" class="number-spinner-input" type="number" value="1">
+                    <button class="number-spinner-plus">+</button>
+                </div>
+            </div>
+        </div>
+        {#            <div class="position">#}
+        {#                <div class="title">Position</div>#}
+        {#                <div class="option-elements">#}
+        {#                    <div class="switcher">#}
+        {#                        <button id="position-vertical" class="select-button">Vertical</button>#}
+        {#                        <button id="position-horizontal" class="select-button">Horizontal</button>#}
+        {#                    </div>#}
+        {#                </div>#}
+        {#            </div>#}
+        <div class="pages">
+            <div class="title">Pages</div>
+            <div class="hint">For example: 2-6,8,10-11</div>
+            <div class="option-elements">
+                <input id="pages-input" class="input-text" type="text" value="1" min="1" max="99">
+            </div>
+        </div>
+    </div>
+</div>
+<script type="module" src="{{ url_for('static', path='scripts/interface.js') }}"></script>
+<script type="module" src="{{ url_for('static', path='scripts/print.js') }}"></script>
+</body>
+</html>

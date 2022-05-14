@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Scan</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', path='styles/styles.css') }}">
+</head>
+<body>
+<div class="container">
+    <div class="options">
+
+        <div class="scan-from">
+            <div class="title">Scan from</div>
+            <div class="option-elements">
+                <div class="switcher">
+                    <button id="scan-from-one-side" class="select-button">One side</button>
+                    <button id="scan-from-both-sides" class="select-button">Both sides</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="quality">
+            <div class="title">Quality</div>
+            <div class="option-elements">
+                <div class="switcher">
+                    <button id="quality-200" class="select-button">200</button>
+                    <button id="quality-300" class="select-button">300</button>
+                    <button id="quality-400" class="select-button">400</button>
+                    <button id="quality-600" class="select-button">600</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script type="module" src="{{ url_for('static', path='scripts/interface.js') }}"></script>
+<script type="module" src="{{ url_for('static', path='scripts/scan.js') }}"></script>
+</body>
+</html>
