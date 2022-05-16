@@ -6,8 +6,6 @@ from aiogram.utils import exceptions
 from bot.utils.printing.job.job import PrintJob
 from bot.utils.printing.file import FileNameGenerator, PdfConverter
 from bot.utils.metrics import metrics
-# from bot.utils import PrintJob, FileNameGenerator, PdfConverter
-# from bot.utils import metrics
 
 
 async def print_document(msg: types.Message):
