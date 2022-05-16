@@ -36,3 +36,4 @@ class PrintingDocumentState(JobState):
 class CompletedState(JobState):
     text = "Completed, check printer."
     can_be_deleted = True
+    show_ad = True

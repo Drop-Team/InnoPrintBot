@@ -75,7 +75,8 @@ class ScanJob(job.Job):
             chat_id,
             text=self.get_message_caption(),
             reply_markup=self.get_message_keyboard(),
-            parse_mode=types.ParseMode.MARKDOWN
+            parse_mode=types.ParseMode.MARKDOWN,
+            disable_web_page_preview=True,
         )
 
     async def update_message(self):
@@ -86,7 +87,8 @@ class ScanJob(job.Job):
             message_id=self._message.message_id,
             text=self.get_message_caption(),
             reply_markup=self.get_message_keyboard(),
-            parse_mode=types.ParseMode.MARKDOWN
+            parse_mode=types.ParseMode.MARKDOWN,
+            disable_web_page_preview=True,
         )
 
     async def confirm(self) -> str:

@@ -8,6 +8,8 @@ from aiogram import types
 from . import states
 from .properties import Properties
 
+from bot.utils.ads.generator import get_ad
+
 
 class Job(ABC):
     """Job with opportunity to change properties and confirm"""
@@ -69,7 +71,10 @@ class Job(ABC):
         if self._state.show_expired_in is True:
             expire_in = self.expire_in
             time = (self._created + timedelta(minutes=expire_in)).strftime("%H:%M")
-            text += f"Job will be expired in {expire_in} min (at {time} MSK)"
+            text += f"Job will be expired in {expire_in} min (at {time} MSK)" + "\n\n"
+
+        if self._state.show_ad is True:
+            text += get_ad() + "\n\n"
 
         return text
 

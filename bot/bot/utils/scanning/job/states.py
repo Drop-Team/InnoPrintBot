@@ -24,6 +24,7 @@ class WaitingForDocumentState(JobState):
 class CompletedState(JobState):
     text = "Completed."
     can_be_deleted = True
+    show_ad = True
 
 
 class MultiScanEditingState(JobState):
