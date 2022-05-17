@@ -37,8 +37,8 @@ def start():
 
     handlers.info.setup(dp)
     handlers.jobs.setup(dp)
-    handlers.printing.setup(dp)
     handlers.scanning.setup(dp)
+    handlers.printing.setup(dp)
 
     executor.start_polling(dp, on_startup=on_startup, skip_updates=True)
 
