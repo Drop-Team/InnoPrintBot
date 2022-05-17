@@ -34,3 +34,5 @@ scanning = Counter(
 )
 scanning.labels("default")
 scanning.labels("multiscan")
+
+printer_available = Gauge("printer_available", "1 if printer is available, 0 if not")
