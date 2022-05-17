@@ -18,6 +18,9 @@ logs = Counter(
 )
 
 
+active_jobs_count = Gauge("active_jobs", "Number of active jobs")
+
+
 printing = Counter(
     "printing", "Confirmed print jobs by options", ["option"]
 )
@@ -34,5 +37,6 @@ scanning = Counter(
 )
 scanning.labels("default")
 scanning.labels("multiscan")
+
 
 printer_available = Gauge("printer_available", "1 if printer is available, 0 if not")
