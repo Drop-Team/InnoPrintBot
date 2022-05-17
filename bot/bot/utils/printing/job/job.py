@@ -52,6 +52,16 @@ class PrintJob(job.Job):
         if self._state is states.EditingState:
             return PrintJobKeyboard(self.get_web_app_url()).get_markup()
 
+    def get_message_caption(self) -> str:
+        text = ""
+
+        if self._state.show_parameters:
+            text += "Document is ready to be printed.\n" \
+                    "If necessary, change the parameters and confirm printing.\n\n"
+
+        text += super().get_message_caption()
+        return text
+
     async def send_message(self, chat_id: int) -> None:
         from bot import bot
 
