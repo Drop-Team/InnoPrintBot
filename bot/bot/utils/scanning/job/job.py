@@ -23,7 +23,7 @@ class ScanJob(job.Job):
 
     _properties: properties.ScanProperties
 
-    expire_in = int(os.getenv("PRINT_JOB_EXPIRED_AFTER"))
+    expire_in = int(os.getenv("SCAN_JOB_EXPIRED_AFTER"))
     web_app_url_postfix = "/telegram/scan"
     properties_class = properties.ScanProperties
     init_state = states.EditingState
@@ -49,6 +49,8 @@ class ScanJob(job.Job):
         text = ""
         if self._state.show_parameters:
             text += "Ready to scan. Change the parameters if necessary and confirm the scan.\n\n"
+
+            text += "You can use different scanner devices. More info [here](https://to.do).\n\n"  # TODO
 
             if not self.is_multiscan_enabled():
                 text += "Note that you can enable MultiScan mode. " \
