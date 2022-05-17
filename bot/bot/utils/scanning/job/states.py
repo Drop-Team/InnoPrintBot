@@ -28,5 +28,4 @@ class CompletedState(JobState):
 
 
 class MultiScanEditingState(JobState):
-    text = "In MultiScan mode. Select action."
     show_expired_in = True

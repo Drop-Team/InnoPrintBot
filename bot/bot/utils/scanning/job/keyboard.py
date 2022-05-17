@@ -37,7 +37,7 @@ class MultiScanKeyboard(JobKeyboard):
         return kb_markup
 
     def get_next_button(self) -> InlineKeyboardButton:
-        return InlineKeyboardButton("Scan next document", callback_data=self.scan_next_callback_data)
+        return InlineKeyboardButton("🟢 Scan next page(s)", callback_data=self.scan_next_callback_data)
 
     def get_stop_button(self) -> InlineKeyboardButton:
-        return InlineKeyboardButton("Stop scanning", callback_data=self.stop_scanning_callback_data)
+        return InlineKeyboardButton("🟠 Stop scanning", callback_data=self.stop_scanning_callback_data)

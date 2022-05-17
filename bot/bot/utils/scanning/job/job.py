@@ -48,9 +48,9 @@ class ScanJob(job.Job):
     def get_message_caption(self) -> str:
         text = ""
         if self._state.show_parameters:
-            text += "Ready to scan. Change the parameters if necessary and confirm the scan.\n\n"
+            text += "Ready to scan. If necessary, change the parameters and confirm the scan.\n\n"
 
-            text += "You can use different scanner devices. More info [here](https://to.do).\n\n"  # TODO
+            text += "You can use different scanning devices. More info [here](https://to.do).\n\n"  # TODO
 
             if not self.is_multiscan_enabled():
                 text += "Note that you can enable MultiScan mode. " \
