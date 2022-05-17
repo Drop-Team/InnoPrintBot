@@ -12,4 +12,4 @@ def setup(dp: Dispatcher):
     dp.register_message_handler(help_command, CommandHelp())
     dp.register_message_handler(privacy_command, CommandPrivacy())
     dp.register_message_handler(authorize_command, commands="auth")
-    dp.register_message_handler(is_not_authorized_error, is_authorized=False)
+    dp.register_message_handler(is_not_authorized_error, content_types=["any"], is_authorized=False)
