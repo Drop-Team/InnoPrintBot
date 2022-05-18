@@ -1,3 +1,5 @@
+import os
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
@@ -22,4 +24,8 @@ def start():
     web_app.include_router(events.router)
     web_app.include_router(telegram.router)
 
-    uvicorn.run(web_app)
+    uvicorn.run(
+        "app:web_app",
+        host="0.0.0.0", port=int(os.getenv("WEB_APP_PORT")),
+        forwarded_allow_ips="*"
+    )

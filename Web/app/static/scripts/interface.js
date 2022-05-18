@@ -1,9 +1,8 @@
-export { selectElementById, setValueByElementID };
+export {selectElementById, setValueByElementID};
 
 function selectElementById(id) {
 
     const element = document.getElementById(id);
-    console.log(element);
     if (element == null) return;
     changeElementSelect(element);
 }
@@ -37,7 +36,7 @@ function changeNumberSpinnerValue(element, change) {
 
 function onNumberSpinnerClick(event) {
 
-    switch(event.target.className) {
+    switch (event.target.className) {
         case "number-spinner-plus":
             changeNumberSpinnerValue(event.target, 1);
             break;
@@ -64,10 +63,3 @@ let optionElements = document.getElementsByClassName("switcher");
 for (let optionElement of optionElements) {
     optionElement.addEventListener("click", onOptionElementsClick);
 }
-
-// let inputTexts = document.getElementsByTagName("input");
-//
-// for (let inputText of inputTexts) {
-//     inputText.addEventListener("input", regexValidation);
-// }
-

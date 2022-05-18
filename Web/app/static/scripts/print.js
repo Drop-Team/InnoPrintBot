@@ -71,5 +71,3 @@ function sendData() {
 }
 
 autoFillFromURL();
-// console.log(getData());
-// sendData();
