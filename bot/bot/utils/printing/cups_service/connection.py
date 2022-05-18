@@ -30,7 +30,7 @@ def create_printer(connection: cups.Connection):
     printer_uri = f"{os.getenv('CUPS_PRINTER_PROTOCOL')}://" \
                   f"{os.getenv('PRINTER_HOST')}:{os.getenv('CUPS_PRINTER_PORT')}"
 
-    connection.deletePrinter(os.getenv("CUPS_PRINTER_NAME"))
+    # connection.deletePrinter(os.getenv("CUPS_PRINTER_NAME"))
     connection.addPrinter(
         os.getenv("CUPS_PRINTER_NAME"),
         device=printer_uri,
