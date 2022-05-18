@@ -1,4 +1,4 @@
-import {selectElementById, setValueByElementID} from './interface.js';
+import {selectElementById} from './interface.js';
 
 Telegram.WebApp.ready();
 Telegram.WebApp.MainButton.setText("SAVE").show().onClick(function () {
@@ -51,5 +51,3 @@ function sendData() {
 }
 
 autoFillFromURL();
-// console.log(getData());
-// sendData();
