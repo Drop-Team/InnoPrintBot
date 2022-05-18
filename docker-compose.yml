@@ -1,0 +1,34 @@
+version: '3.9'
+services:
+  cups:
+    image: ydkn/cups:latest
+    container_name: cups
+    restart: always
+    ports:
+      - "631:631"
+    environment:
+      - ADMIN_PASSWORD=${CUPS_PASSWORD}
+
+  bot:
+      build: ./Bot
+      container_name: Bot
+      restart: on-failure
+      ports:
+        - "${PROMETHEUS_PORT}:${PROMETHEUS_PORT}"
+      volumes:
+        - ./Bot:/Bot
+      env_file:
+        - .env
+      depends_on:
+        - cups
+
+  web:
+    build: ./Web
+    container_name: web
+    restart: on-failure
+    ports:
+      - "${WEB_APP_PORT}:${WEB_APP_PORT}"
+    volumes:
+      - ./Web:/web
+    env_file:
+      - .env
