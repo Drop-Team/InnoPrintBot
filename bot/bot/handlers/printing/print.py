@@ -4,7 +4,7 @@ from aiogram import types
 from aiogram.utils import exceptions
 
 from bot.utils.metrics import metrics
-from bot.utils.printing.file import FileNameGenerator, PdfConverter
+from bot.utils.printing.converter.file import FileNameGenerator, PdfConverter
 from bot.utils.printing.job.job import PrintJob
 
 

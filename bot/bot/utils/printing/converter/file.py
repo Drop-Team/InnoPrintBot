@@ -1,11 +1,9 @@
 import os
+import shutil
 
 import PyPDF4
 from PyPDF4.utils import PyPdfError
 from unoserver.converter import UnoConverter
-import shutil
-
-pdf_converter = UnoConverter()
 
 
 class FileNameGenerator:
@@ -44,6 +42,7 @@ class PdfConverter:
 
     def convert_to_pdf(self) -> str:
         """Converts file to PDF if needed and returns new path"""
+        pdf_converter = UnoConverter()
 
         new_path = self.__not_converted_file_path + ".pdf"
 

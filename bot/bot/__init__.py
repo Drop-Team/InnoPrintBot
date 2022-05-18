@@ -1,14 +1,14 @@
+import asyncio
 import os
 
 from aiogram import Bot, Dispatcher
 from aiogram.utils import executor
 
-import asyncio
-
 
 async def on_startup(dispatcher: Dispatcher):
     from bot.utils.metrics import metrics
     from bot.utils.printing import cups_event
+    from bot.utils.printing.converter.server import start_uno_server
 
     bot_info = await bot.get_me()
     print(f"Logged in as {bot_info.full_name} ({bot_info.mention})")
@@ -23,7 +23,7 @@ async def on_startup(dispatcher: Dispatcher):
     from bot.loops import main_loop
     current_event_loop.create_task(main_loop(0.5))
 
-    # soffice --accept="socket,host=localhost,port=2002;urp" --quickstart
+    start_uno_server()
 
 
 def start():

@@ -10,7 +10,7 @@ from bot.utils.metrics import metrics
 from . import states, properties
 from .keyboard import PrintJobKeyboard
 from ..cups_service.printing import print_file
-from ..file import get_pdf_pages_count
+from bot.utils.printing.converter.file import get_pdf_pages_count
 
 
 class PrintJob(job.Job):
