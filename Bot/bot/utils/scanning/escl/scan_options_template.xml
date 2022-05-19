@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scan:ScanSettings xmlns:pwg="http://www.pwg.org/schemas/2010/12/sm"
+                   xmlns:scan="http://schemas.hp.com/imaging/escl/2011/05/03">
+    <pwg:Version>2.63</pwg:Version>
+    <pwg:ScanRegions>
+        <pwg:ScanRegion>
+            <pwg:Height>4205</pwg:Height>
+            <pwg:Width>2551</pwg:Width>
+            <pwg:XOffset>0</pwg:XOffset>
+            <pwg:YOffset>0</pwg:YOffset>
+        </pwg:ScanRegion>
+    </pwg:ScanRegions>
+    <scan:Duplex>{sides}</scan:Duplex>
+    <scan:AdfOption>Duplex</scan:AdfOption>
+    <scan:ColorMode>RGB24</scan:ColorMode>
+    <scan:XResolution>{quality}</scan:XResolution>
+    <scan:YResolution>{quality}</scan:YResolution>
+    <pwg:DocumentFormat>application/pdf</pwg:DocumentFormat>
+</scan:ScanSettings>
