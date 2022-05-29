@@ -50,7 +50,7 @@ class ScanJob(job.Job):
         if self._state.show_parameters:
             text += "Ready to scan. If necessary, change the parameters and confirm the scan.\n\n"
 
-            text += "You can use different scanning devices. More info [here](https://to.do).\n\n"  # TODO
+            text += "You can use different scanning devices. More info [here](https://t.me/DropTeamDev/18).\n\n"
 
             if not self.is_multiscan_enabled():
                 text += "Note that you can enable MultiScan mode. " \

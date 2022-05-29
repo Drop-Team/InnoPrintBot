@@ -9,8 +9,9 @@ async def help_command(msg: types.Message):
            "/help - Shows this message\n" \
            "/privacy - Get privacy policy\n" \
            "/auth - Get instruction for authorization\n\n" \
-           "To print a file just send it a document\n" \
+           "To print a file just send it as a document\n" \
            "To scan, use the /scan command\n\n" \
+           "FAQ: https://t.me/DropTeamDev/19\n\n" \
            "Developers & Support: @DropTeamDev\n" \
            "In case of problems, write to @blinikar or @KeepError\n\n" \
            "Our products are open source, so you can find repository on GitHub: " \

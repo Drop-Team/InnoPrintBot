@@ -4,5 +4,5 @@ ads = [
     "🌎 Powered by InnoID (@InnoIDBot)",
     "⭐ Star us on GitHub: https://github.com/Drop-Team/InnoPrintBot",
     "❤ Based on the feedback, we have released Update 3.0. Check it out and leave a comment:\n"
-    "{Link to post}",  # TODO
+    "https://t.me/DropTeamDev/20",
 ]
