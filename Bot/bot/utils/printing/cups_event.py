@@ -5,6 +5,7 @@ from typing import NamedTuple, Type, Optional
 
 from cups_notify import event
 
+from bot.utils.logs.logger import logger
 from .cups_service import cups_subscription
 from .job import states
 from .job.get_job import get_job_by_cups_job_id
@@ -41,9 +42,8 @@ def subscribe():
 async def on_event(cups_event: event.CupsEvent):
     """CUPS event handler"""
 
-    print("===================")
-    print(cups_event.title)
-    print(cups_event.description)
+    logger.info("CUPS Event: " + cups_event.title)
+
     title = cups_event.title
     description = cups_event.description
 
