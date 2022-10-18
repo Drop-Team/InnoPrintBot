@@ -14,4 +14,4 @@ COPY . /Bot
 
 EXPOSE ${PROMETHEUS_PORT}
 
-CMD ["python3", "run.py"]
+CMD ["python3", "-u", "run.py"]
