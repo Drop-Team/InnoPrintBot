@@ -15,6 +15,10 @@ Bot which allows to print and scan with different parameters using the Telegram 
 
 It has ready-to-use components, so it's easy to add functionality.
 
+<img src=".assets/screenshot_1.jpeg" alt="Screenshot 1" height="300"/>
+<img src=".assets/screenshot_2.jpeg" alt="Screenshot 2" height="300"/>
+<img src=".assets/screenshot_3.jpeg" alt="Screenshot 3" height="300"/>
+
 ## Used
 
 - [AIOGram](https://github.com/aiogram/aiogram) as framework for Telegram Bot API

@@ -13,7 +13,7 @@ async def main_loop(seconds: float):
     print_jobs.loops_counter.set_required_loops_number_by_seconds(seconds, 3)
     files_cleaner.loops_counter.set_required_loops_number_by_seconds(seconds, 3)
     metrics.loops_counter.set_required_loops_number_by_seconds(seconds, 30)
-    authorized_users.loops_counter.set_required_loops_number_by_seconds(seconds, 1800)
+    authorized_users.loops_counter.set_required_loops_number_by_seconds(seconds, 30 * 60)
 
     while True:
         try:
