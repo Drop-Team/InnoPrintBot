@@ -30,7 +30,7 @@ async def print_document(msg: types.Message):
     try:
         if not file_converter.is_pdf():
             await status_message.edit_text("Converting to PDF...")
-        file_path = file_converter.convert_to_pdf()
+            file_path = file_converter.convert_to_pdf()
     except Exception as e:
         await status_message.edit_text("Converting to PDF failed.")
         return
