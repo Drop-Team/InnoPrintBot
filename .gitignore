@@ -2,3 +2,4 @@
 /Web/.idea/
 /Bot/bot.log
 /.env
+*.pyc
