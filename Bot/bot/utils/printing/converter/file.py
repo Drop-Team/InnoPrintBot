@@ -52,10 +52,7 @@ class PdfConverter:
             self.__converted_file_path = new_path
             return new_path
 
-        # pdf_converter.convert(inpath=self.__not_converted_file_path, outpath=new_path, convert_to="pdf")
-        new_dir = "/".join(new_path.split("/")[:-1])
-        command = ["libreoffice", "--headless", "--convert-to", "pdf", "--outdir", new_dir, self.__not_converted_file_path]
-        subprocess.run(command)
+        pdf_converter.convert(inpath=self.__not_converted_file_path, outpath=new_path, convert_to="pdf")
 
         self.__converted_file_path = new_path
         self.__is_converted = True
