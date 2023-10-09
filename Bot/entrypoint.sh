@@ -1,3 +1,3 @@
 #!/bin/bash
-unoserver --daemon
+# unoserver --daemon
 python3 -u run.py

@@ -3,7 +3,7 @@ import shutil
 
 import PyPDF4
 from PyPDF4.utils import PyPdfError
-from unoserver.converter import UnoConverter
+# from unoserver.converter import UnoConverter
 import subprocess
 
 

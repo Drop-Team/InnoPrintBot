@@ -2,6 +2,7 @@ import os
 
 from aiogram import types
 from aiogram.utils import exceptions
+from aiogram import types
 
 from bot.utils.metrics import metrics
 from bot.utils.printing.converter.file import FileNameGenerator, PdfConverter
@@ -10,6 +11,13 @@ from bot.utils.printing.job.job import PrintJob
 
 async def print_document(msg: types.Message):
     """Handler for receiving documents and preparing it to print"""
+
+    markup = types.InlineKeyboardMarkup()
+    markup.add(
+        types.InlineKeyboardButton(text="Go to the new bot", url="https://t.me/BlueBox_bot?start=3907965d-2395-4a00-a3ea-1f53c7456496")
+    )
+    await msg.answer("Now printing available in our new project BlueBox. Please use button below.", reply_markup=markup)
+    return
 
     if msg.document is None and not msg.photo:
         text = "Please send the document you want to print (better in PDF format)."
