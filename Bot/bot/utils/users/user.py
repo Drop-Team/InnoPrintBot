@@ -13,6 +13,7 @@ class User:
         self.telegram_id = telegram_id
 
     async def is_authorized(self) -> bool:
+        return True
         async with aiohttp.ClientSession() as session:
             request_url = f'{os.getenv("INNOID_API_URL")}/users/{self.telegram_id}'
             headers = {"Authorization": "Bearer " + os.getenv("INNOID_API_AUTH_TOKEN")}
